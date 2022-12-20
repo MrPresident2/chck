@@ -42,14 +42,14 @@ captive_portal:
   
 switch:
   - platform: gpio
-    pin: 0
+    pin: ${CW}
     inverted: false
     name: "DontUse1"
     id: DontUse1
     internal: True
 
   - platform: gpio
-    pin: 2
+    pin: ${CCW}
     inverted: false
     name: "DontUse2"
     id: DontUse2
