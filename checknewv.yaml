@@ -1,7 +1,7 @@
 substitutions:
-  name: "checkone"
-  friendly_name: "Check One"
-  project_name: "Check.One"
+  name: "smart-air-freshener"
+  friendly_name: "MrPresident Smart Air Freshener"
+  project_name: "MrPresident SmartHome.Smart Air Freshener"
   project_version: "1.5.0"
   CCW: '2'
   CW: '0'
@@ -32,6 +32,11 @@ dashboard_import:
  import_full_config: True
 
 wifi:
+
+  manual_ip:
+   static_ip: 192.168.1.53
+   gateway: 192.168.1.1
+   subnet: 255.255.255.0
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
