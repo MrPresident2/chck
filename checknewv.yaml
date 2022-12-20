@@ -1,0 +1,101 @@
+substitutions:
+  name: "checkone"
+  friendly_name: "Check One"
+  project_name: "Check.One"
+  project_version: "1.5.0"
+  CCW: '2'
+  CW: '0'
+
+esphome:
+  name: "${name}"
+  name_add_mac_suffix: true
+  project:
+    name: "${project_name}"
+    version: "${project_version}"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+# This should point to the public location of this yaml file.
+dashboard_import:
+ package_import_url: github://mrpresident2/chck/checknewv.yaml@main
+ import_full_config: True
+
+wifi:
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Hello"
+    password: ""
+
+captive_portal:
+  
+switch:
+  - platform: gpio
+    pin: 0
+    inverted: false
+    name: "DontUse1"
+    id: DontUse1
+    internal: True
+
+  - platform: gpio
+    pin: 2
+    inverted: false
+    name: "DontUse2"
+    id: DontUse2
+    internal: True
+
+  - platform: template
+    name: "Spray"
+    id: Spray
+    optimistic: True
+    on_turn_on:
+      - switch.turn_on: DontUse1
+      - switch.turn_off: DontUse2
+      - delay: 350ms
+      - switch.turn_on: DontUse1
+      - switch.turn_on: DontUse2
+      - delay: 500ms
+      - switch.turn_on: DontUse2
+      - switch.turn_off: DontUse1
+      - delay: 350ms
+      - switch.turn_off: DontUse2
+      - switch.turn_off: DontUse1    
+      - switch.turn_off: Spray
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 4
+      mode:
+        input: true
+        pullup: true
+      inverted: true    
+    name: "Physical Button"
+    on_multi_click:
+    - timing:
+        - ON for at most 2s
+        - OFF for at most 2s
+        - ON for at most 2s
+        - OFF for at least 0.2s
+      then:
+      - logger.log: "Double Clicked"
+      - delay: 5s
+      - switch.turn_on: Spray
+    - timing:
+        - ON for at most 2s
+        - OFF for at least 0.5s
+      then:
+        - logger.log: "Single Short Clicked"    
+        - delay: 2s
+        - switch.turn_on: Spray
