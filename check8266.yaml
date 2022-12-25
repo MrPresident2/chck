@@ -3,8 +3,8 @@ substitutions:
   friendly_name: "MrPresident Smart Air Freshener"
   project_name: "MrPresident SmartHome.Smart Air Freshener"
   project_version: "1.5.1"
-  CCW: '2'
-  CW: '0'
+  CCW: '2'   #To change motor direction chnage this to 0
+  CW: '0'    #To change motor direction chnage this to 2
 
 esphome:
   name: "${name}"
